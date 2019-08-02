@@ -4,6 +4,8 @@ Simple application that allows controllers to quickly get the latest VRC facilit
 
 (I will add support for other clients (ie Euroscope, vSTARS, vERAM) soon).
 
+![Program Image][https://i.imgur.com/FN7PDAW.png]
+
 ## How it works
 
 The facility configures it (using the source), then sends it out to their controllers. Then when it comes time for a controller to download the files, it will remove all files and folders in the destination folder (where your facility files are, usually VRC/Files/ZZZ), then it will automatically download new files, and extract the .zip file (only .zip files are supported currently, feel free to add support for other extensions if you wish).
