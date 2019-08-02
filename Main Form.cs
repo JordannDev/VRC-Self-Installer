@@ -18,7 +18,7 @@ namespace VRC_Auto_Installer {
         // ARTCC/vACC Facility Code
         private string facilityCode = "ZME";
         // VRC File URL.
-        private string vrcLink = "https://vzmeartcc.com/file/lol.zip";
+        private string vrcLink = "LINK-TO-FILE";
         // Name of the file.
         private string vrcFileName = "zme_vrc.zip";
         // File destination used when extracting.
@@ -36,7 +36,7 @@ namespace VRC_Auto_Installer {
             this.textBody.Text = this.textBody.Text.Replace("%fac%", facilityCode);
             // Set file destination.
             fileDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "VRC\\Filez\\" + facilityCode);
+                "VRC\\Files\\" + facilityCode);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -60,7 +60,7 @@ namespace VRC_Auto_Installer {
             try {
                 // Create folder...
                 Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "VRC\\Filez\\" + facilityCode));
+                    "VRC\\Files\\" + facilityCode));
 
 
                 // Remove old files before extracting..
@@ -73,7 +73,7 @@ namespace VRC_Auto_Installer {
                 // Download file using Web Client..
                 WebClient webClient = new WebClient();
                 webClient.DownloadFile(vrcLink, @Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "VRC\\Filez\\" + facilityCode + "\\" + vrcFileName));
+                    "VRC\\Files\\" + facilityCode + "\\" + vrcFileName));
 
                 // Extract Files..
                 ZipFile.ExtractToDirectory(fileDestination + "\\" + vrcFileName, fileDestination);
