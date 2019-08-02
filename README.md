@@ -4,7 +4,7 @@ Simple application that allows controllers to quickly get the latest VRC facilit
 
 (I will add support for other clients (ie Euroscope, vSTARS, vERAM) soon).
 
-![Program Image][https://i.imgur.com/FN7PDAW.png]
+![Program Image](https://i.imgur.com/FN7PDAW.png)
 
 ## How it works
 
