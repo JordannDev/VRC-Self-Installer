@@ -18,7 +18,7 @@ namespace VRC_Auto_Installer {
         // ARTCC/vACC Facility Code
         private string facilityCode = "ZME";
         // VRC File URL.
-        private string vrcLink = "LINK-TO-FILE";
+        private string vrcLink = "LINK";
         // Name of the file.
         private string vrcFileName = "zme_vrc.zip";
         // File destination used when extracting.
@@ -37,6 +37,8 @@ namespace VRC_Auto_Installer {
             // Set file destination.
             fileDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "VRC\\Files\\" + facilityCode);
+
+            writeToIni();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -78,6 +80,11 @@ namespace VRC_Auto_Installer {
                 // Extract Files..
                 ZipFile.ExtractToDirectory(fileDestination + "\\" + vrcFileName, fileDestination);
 
+                // Add extra content to profiles..
+                writeToIni();
+                // Delete .zip file
+                File.Delete(fileDestination + "\\" + vrcFileName);
+
                 MessageBox.Show("Downloaded latest files successfully.", "Finished!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex) {
@@ -86,6 +93,34 @@ namespace VRC_Auto_Installer {
                 Console.WriteLine(ex.StackTrace);
             }
 
+        }
+
+        private void writeToIni() {
+            // Check if Color Profiles/Profiles merge file exists...
+            if (File.Exists(fileDestination + "\\cprofiles.ini")) {
+                // Read file, and store in string.
+                string text = File.ReadAllText(fileDestination + "\\cprofiles.ini");
+                // Split string based on profile entry
+                string[] profiles = text.Split('[');
+
+                // Read the VRC.ini file...
+                string vrcIni = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    "VRC\\VRC.ini"));
+                // Get the path for the VRC ini file... (in perfect order obviously)
+                string vrcIniPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    "VRC\\VRC.ini");
+
+                // Iterate through existing profile, and see if we need to add any profiles from our cprofiles.ini
+                foreach (var pf in profiles) {
+                    if (!vrcIni.Contains(pf)) {
+                        File.WriteAllText(vrcIniPath, vrcIni + "\n[" + pf);
+                    }
+                }
+
+                // Delete the cprofiles.ini file after iterating through it.
+                File.Delete(fileDestination + "\\cprofiles.ini");
+
+            }
         }
 
 
